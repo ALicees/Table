@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#vl_table{
+				border:1px solid #FF69B4;
+				border-collapse:0;
+				height:120px;
+			}
+			#vl_table td{
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box"></div>
+		<script>
+			!function(global){
+				function eachdata(obj,elementNode,parentNode){
+					Object.keys(obj).forEach(function(key){
+						var cell=document.createElement(elementNode);
+						cell.innerText=obj[key];
+						parentNode.appendChild(cell);
+					});
+				}
+				var Table=function(data){
+					var _table=document.createElement('table');
+					_table.id="vl_table";
+					_table.width="100%";
+					_table.border=1;
+					_table.style.tableLayout='fixed';
+					_table.style.cellSpacing='none';
+					_table.style.cellPadding='none';
+					data.el.appendChild(_table);
+					//获取头部信息
+					var thead=data.thead;
+					var head_tr=document.createElement('tr');
+					head_tr.className="xl_table_header";
+					_table.appendChild(head_tr);
+					eachdata(thead,"th",head_tr);
+					//表信息添加
+					var td_data=data.columns;
+					td_data.map(function(dataobj){
+						var data_tr=document.createElement("tr");
+						data_tr.className="xl_table_data";
+						_table.appendChild(data_tr);
+						eachdata(dataobj,"td",data_tr);
+					})
+				}
+				global.Table=Table;
+			}(window);//立即执行函数
+			
+			
+			
+			/*function Table(){}
+			var tabl=document.getElementById('box');
+			var html='';
+			html += ""
+			Table.prototype={
+				
+				init:function(){
+					this.width=width;
+					this.height=height;
+				},
+				rendor:function(){
+					
+				}
+			}
+			var table=new Table();
+			*/
+			
+			var table=new Table({
+				el:document.getElementById('box'),
+				thead:{
+					name:'姓名',
+					age:'年龄',
+					sex:'性别',
+					lang:'兴趣'
+				},
+				columns:[
+					{
+						name:'新奥法',
+						age:'12',
+						sex:'女',
+						lang:'吃饭'
+				    }
+				]
+			})
+		</script>
+	</body>
+</html>
